@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Test1 {
 
-    public static void main() {
+    public static void main(String args[]) {
         try {
-            File file = new File("./src/main/resources/config.xml");
+            File file = new File("./src/main/resources/config1.xml");
             //работа с xml
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
