@@ -7,9 +7,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
 public class Test2 {
+    private static String filepath = "./src/main/resources/config2.xml";
+    private static String firstString;
     public static void main(String args[]) {
         try {
-            File file = new File("./src/main/resources/config2.xml");
+            File file = new File(filepath);
             //работа с xml
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -34,33 +36,18 @@ public class Test2 {
 
             int countPunctuation = 0;
 
+            String punct = ",.;:?!";
             for (int i = 0; i < testString.length(); i++) {
-                switch (testString.charAt(i)) {
-                    case '.':
-                        countPunctuation++;
-                        break;
-                    case ',':
-                        countPunctuation++;
-                        break;
-                    case '?':
-                        countPunctuation++;
-                        break;
-                    case '!':
-                        countPunctuation++;
-                        break;
-                    case ':':
-                        countPunctuation++;
-                        break;
-                    case ';':
-                        countPunctuation++;
-                        break;
-                    default:
-                        break;
+                char test = testString.charAt(i);
+                if (punct.contains(test + "")) {
+                    countPunctuation++;
                 }
             }
+
             System.out.println("Всего знаков препинания " + countPunctuation);
 
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             e.printStackTrace();
         }
     }
