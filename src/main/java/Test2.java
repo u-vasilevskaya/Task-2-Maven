@@ -1,54 +1,43 @@
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
 
 public class Test2 {
     private static String filepath = "./src/main/resources/config2.xml";
-    private static String firstString;
+    private static String word;
+    private static String testString;
+    static String punct = ",.;:?!";
+
     public static void main(String args[]) {
         try {
             File file = new File(filepath);
-            //работа с xml
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(file);
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("Strings");
+            readData(file);
 
-            Element strings = (Element) nList.item(0);
-            String word = strings.getElementsByTagName("Word").item(0).getTextContent();
-            String testString = strings.getElementsByTagName("String").item(0).getTextContent();
-
-            String[] str2Words = testString
-                    .toLowerCase()
-                    .split("[, ?.!:]+");
-            int countWord = 0;
-            for (String str2Word : str2Words) {
-                if (str2Word.equals(word)) {
-                    countWord++;
-                }
-            }
-            System.out.println("Слово '" + word + "'  встречается " + countWord + " раз(а)");
-
-            int countPunctuation = 0;
-
-            String punct = ",.;:?!";
-            for (int i = 0; i < testString.length(); i++) {
-                char test = testString.charAt(i);
-                if (punct.contains(test + "")) {
-                    countPunctuation++;
-                }
-            }
-
-            System.out.println("Всего знаков препинания " + countPunctuation);
-
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        StringHelper.getCountWord(testString, word);
+        StringHelper.gerCountPunctuation(testString, punct);
+    }
+
+
+    private static void readData(File file) throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(file);
+        doc.getDocumentElement().normalize();
+        NodeList nList = doc.getElementsByTagName("Strings");
+
+        Element strings = (Element) nList.item(0);
+        word = strings.getElementsByTagName("Word").item(0).getTextContent();
+        testString = strings.getElementsByTagName("String").item(0).getTextContent();
     }
 }
